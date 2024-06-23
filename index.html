@@ -11,10 +11,34 @@
         body {
             margin: 0;
             padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #555;
         }
 
         h3 {
-            margin-top: 40px;
+            margin-top: 30px;
             color: #333;
         }
 
@@ -25,6 +49,15 @@
         .el-radio {
             margin-bottom: 15px;
         }
+
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .el-button {
+            margin: 0 5px;
+        }
     </style>
     <!-- 引入vue框架 -->
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0/vue.min.js"></script>
@@ -33,25 +66,23 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="container">
+        <h1>同济校园特色绿化措施的偏好</h1>
+        <h2>项目介绍：这是一个关于环境感知和偏好的调查问卷，旨在收集您的宝贵意见。</h2>
         <h3>4个要素：</h3>
-        <p>
-            {{ dimensionsDisplay }}
-        </p>
+        <p>{{ dimensionsDisplay }}</p>
         <h3>随机从5个要素中抽取一个水平组成情景：</h3>
-        <p>
-            {{ listDisplay }}
-        </p>
+        <p>{{ listDisplay }}</p>
         <h3>请选出你倾向的答案：</h3>
         <el-radio-group v-model="radio">
-            <template v-for="(item,i) in items">
+            <template v-for="(item, i) in items">
                 <el-radio :label="item" :key="i"></el-radio><br>
             </template>
         </el-radio-group>
-        <p>
+        <div class="button-group">
             <el-button @click="genTwoItems" size="small" icon="el-icon-refresh">刷新</el-button>
             <el-button type="primary" @click="showResult" size="small" icon="el-icon-check">提交</el-button>
-        </p>
+        </div>
     </div>
     <script>
         new Vue({
@@ -73,10 +104,10 @@
             computed: {
                 // Display the selected dimensions for reference
                 dimensionsDisplay() {
-                    return this.dimensions;
+                    return this.dimensions.map(d => d.join(', ')).join('; ');
                 },
                 listDisplay() {
-                    return this.selectedDimensions;
+                    return this.selectedDimensions.map(d => d.join(', ')).join('; ');
                 }
             },
             mounted() {
