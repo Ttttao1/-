@@ -88,10 +88,10 @@
                 // 根据5个维度，生成两组选项
                 genTwoItems() {
                     this.initRandomDimensions(); // 初始化随机维度
-                    let firstItem = this.selectedDimensions.map(arr => arr[Math.floor(Math.random() * arr.length)]).join(' ');
-                    let secondItem = this.selectedDimensions.map(arr => arr[Math.floor(Math.random() * arr.length)]).join(' ');
+                    let firstItem = this.list.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ')
+                    let secondItem = this.list.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ')
                     // 从每个维度的数组中抽取第一项作为第三个选项
-                    let thirdItem = this.selectedDimensions.map(arr => arr[0]).join(' ');
+                    let thirdItem = this.list.map(arr => arr[0]).join(' ');
                     
                     this.items = [firstItem, secondItem, thirdItem];
                 },
