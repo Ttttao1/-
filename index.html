@@ -90,7 +90,19 @@
                     this.items = [firstItem, secondItem]
                 },
                 showResult() {
-                    alert(this.radio)
+                    if (this.radio === '') {
+                            alert('请选择一个选项');
+                        } else {
+                            // 这里可以添加将选项发送到服务器的代码
+                    
+                            // 提交后重置当前选中的选项
+                            this.radio = '';
+                    
+                            // 重新生成新的选项
+                            this.genTwoItems();
+                    
+                            // 可选: 显示提交成功的消息
+                            alert('提交成功，选项已刷新');
                 }
             },
         })
