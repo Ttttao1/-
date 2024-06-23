@@ -36,11 +36,11 @@
     <div id="app">
         <h3>4个要素：</h3>
         <p>
-            {{ dimensions }}
+            {{ dimensionsDisplay }}
         </p>
         <h3>随机从5个要素中抽取一个水平组成情景：</h3>
         <p>
-            {{ list }}
+            {{ listDisplay }}
         </p>
         <h3>请选出你倾向的答案：</h3>
         <el-radio-group v-model="radio">
@@ -61,57 +61,60 @@
                     curQuestion: 0, //待使用
                     radio: '',
                     items: [],
+                    selectedDimensions: [],
                     dimensions: [
                         ['（花卉增添）保持现状', '（花卉增添）节点都配置', '（花卉增添）目之所及都有'],
                         ['（绿色立面）为数不多绿色立面', '（绿色立面）不同区域都有', '（绿色立面）路边都有绿色立面'],
                         ['（生态活动）不定期活动', '（生态活动）偶尔定期活动', '（生态活动）经常定期活动'],
                         ['不投入时长', '投入时长（0.5小时每月）', '投入时长（1小时每月）', '投入时长（1.5小时每月）', '投入时长（2小时每月）']
                     ],
-
                 }
             },
             computed: {
-                // 随机生成5个维度
-                list() {
-                    // 这个代码首先使用 slice(0) 方法创建一个原始数组的副本，然后使用 sort() 方法将副本数组随机排序，最后使用 slice(0, 10) 方法截取前 10 个元素作为结果数组。
-                    return this.dimensions.slice(0).sort(() => Math.random() - 0.5).slice(0, 4);
+                // Display the selected dimensions for reference
+                dimensionsDisplay() {
+                    return this.dimensions;
+                },
+                listDisplay() {
+                    return this.selectedDimensions;
                 }
             },
             mounted() {
                 // 页面加载后，先生成一遍两个选项
-                this.genTwoItems()
+                this.genTwoItems();
             },
             methods: {
                 initRandomDimensions() {
-                        this.selectedDimensions = this.dimensions.slice(0).sort(() => Math.random() - 0.5).slice(0, 4);
-                 },
+                    this.selectedDimensions = this.dimensions.slice(0).sort(() => Math.random() - 0.5).slice(0, 4);
+                },
                 // 根据5个维度，生成两组选项
                 genTwoItems() {
                     this.initRandomDimensions(); // 初始化随机维度
-                    let firstItem = this.list.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ')
-                    let secondItem = this.list.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ')
+                    let firstItem = this.selectedDimensions.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ');
+                    let secondItem = this.selectedDimensions.map(_arr => _arr[Math.floor(Math.random() * _arr.length)]).join(' ');
                     // 从每个维度的数组中抽取第一项作为第三个选项
-                    let thirdItem = this.list.map(arr => arr[0]).join(' ');
-                    
+                    let thirdItem = this.selectedDimensions.map(arr => arr[0]).join(' ');
+
                     this.items = [firstItem, secondItem, thirdItem];
                 },
                 showResult() {
                     if (this.radio === '') {
-                            alert('请选择一个选项');
-                        } else {
-                            // 这里可以添加将选项发送到服务器的代码
-                    
-                            // 提交后重置当前选中的选项
-                            this.radio = '';
-                    
-                            // 重新生成新的选项
-                            this.genTwoItems();
-                    
-                            // 可选: 显示提交成功的消息
-                            alert('提交成功，选项已刷新');
-                }
-            },
-        })
+                        alert('请选择一个选项');
+                    } else {
+                        // 这里可以添加将选项发送到服务器的代码
+
+                        // 提交后重置当前选中的选项
+                        this.radio = '';
+
+                        // 重新生成新的选项
+                        this.genTwoItems();
+
+                        // 可选: 显示提交成功的消息
+                        alert('提交成功，选项已刷新');
+                    }
+                },
+            }
+        });
     </script>
 </body>
 
