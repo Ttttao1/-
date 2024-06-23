@@ -82,6 +82,9 @@
                 this.genTwoItems()
             },
             methods: {
+                initRandomDimensions() {
+                        this.selectedDimensions = this.dimensions.slice(0).sort(() => Math.random() - 0.5).slice(0, 4);
+                 },
                 // 根据5个维度，生成两组选项
                 genTwoItems() {
                     this.initRandomDimensions(); // 初始化随机维度
